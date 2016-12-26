@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="1.0" xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd ">
+
+
+    <!--<named-native-query name="namedQuery 이름">-->
+        <!--<query>-->
+            <!--<![CDATA[-->
+                    <!--쿼리작성-->
+                    <!--CDATA를 삭제 할 경우 비교연산자등의 표현에 제한이 있을 수 있음-->
+            <!--]]>-->
+        <!--</query>-->
+    <!--</named-native-query>-->
+
+</entity-mappings>

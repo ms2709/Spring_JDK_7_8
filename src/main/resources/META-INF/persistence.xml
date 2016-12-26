@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+    <!--<persistence  xmlns="http://java.sun.com/xml/ns/persistence">-->
+    <!--jeus의 경우 javax.pesistence 2.1을 제공하지 않음 변경 해야함-->
+    <persistence-unit name="ctxJPA" transaction-type="RESOURCE_LOCAL">
+
+        <!--JNDI 시작 -->
+        <!--<non-jta-data-source>WAS에 등록된 JNDI 이름</non-jta-data-source>-->
+        <!--JNDI 끝 -->
+
+        <!--데이터 소스 시작-->
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <!--데이터 소스 끝-->
+
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
+        <!--데이터 매핑 클래스 지정-->
+        <class>com.munseop.project.model.Member</class>
+
+        <!--jdbc 관련 로그 설정 시작-->
+        <properties>
+            <property name="eclipselink.logging.level" value="FINE" />
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+        </properties>
+        <!--jdbc 관련 로그 설정 끝-->
+
+        <!--커스텀 쿼리선언 시작-->
+        <mapping-file>/META-INF/queries/CommonQueries.xml</mapping-file>
+        <!--커스텀 쿼리선언 끝-->
+
+    </persistence-unit>
+
+
+
+
+</persistence>
