@@ -25,12 +25,12 @@
 
 
     <!--큐브리드 데이터소스-->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">
-        <property name="driverClassName" value="cubrid.jdbc.driver.CUBRIDDriver" />
-        <property name="url" value="jdbc:cubrid:접속정보:접속포트:DB명:::?charset=UTF-8" />
-        <property name="username" value="유저명" />
-        <property name="password" value="비밀번호" />
-    </bean>
+    <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  destroy-method="close">-->
+        <!--<property name="driverClassName" value="cubrid.jdbc.driver.CUBRIDDriver" />-->
+        <!--<property name="url" value="jdbc:cubrid:접속정보:접속포트:DB명:::?charset=UTF-8" />-->
+        <!--<property name="username" value="유저명" />-->
+        <!--<property name="password" value="비밀번호" />-->
+    <!--</bean>-->
 
     <!--오라클 데이터 소스-->
     <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
@@ -40,6 +40,19 @@
         <!--<property name="password" value="비밀번호"/>-->
         <!--<property name="defaultAutoCommit" value="false"/>-->
     <!--</bean>-->
+
+    <!--MSSQL SERVER 데이터 소스-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+    <property name="url" value="jdbc:sqlserver://localhost:1433;databaseName=ExamplesDB" />
+    <property name="username" value="유저명"/>
+    <property name="password" value="비밀번호"/>
+
+    <!--<property name="defaultAutoCommit" value="false"/>-->
+    </bean>
+
+
+
 
     <!--JNDI-->
     <!--<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">-->

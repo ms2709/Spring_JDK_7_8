@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <version>1.0.0</version>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>springEmpty</groupId>
-    <artifactId>springEmpty</artifactId>
+    <groupId>spring4WebSocketWithSTOMP</groupId>
+    <artifactId>spring4WebSocketWithSTOMP</artifactId>
     <packaging>war</packaging>
-    <name>springEmpty</name>
+    <name>spring4WebSocketWithSTOMP</name>
     <!--
         위의 springEmpty 부분을 프로젝트 이름으로 교체해야함
         1. groupId
@@ -30,6 +30,8 @@
 
         <slf4j.version>1.7.21</slf4j.version>
         <cubrid.jdbc.version>9.3.6.0002</cubrid.jdbc.version>
+        <mssql.jdbc.version>4.0</mssql.jdbc.version>
+
     </properties>
     <!--인코딩, Import 할 프로젝트의 버전을 설정할 값 끝-->
     <repositories>
@@ -326,12 +328,20 @@
 
 
         <!--큐브리드 jdbc 시작-->
-        <dependency>
-            <groupId>cubrid</groupId>
-            <artifactId>cubrid-jdbc</artifactId>
-            <version>${cubrid.jdbc.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>cubrid</groupId>-->
+            <!--<artifactId>cubrid-jdbc</artifactId>-->
+            <!--<version>${cubrid.jdbc.version}</version>-->
+        <!--</dependency>-->
         <!--큐브리드 jdbc 끝-->
+
+        <!--sql server jdbc 시작-->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>${mssql.jdbc.version}</version>
+        </dependency>
+        <!--sql server jdbc 끝-->
 
         <!--jdbc관련 끝-->
 

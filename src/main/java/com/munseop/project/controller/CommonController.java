@@ -27,9 +27,9 @@ public class CommonController extends RootController {
 
     @RequestMapping("/movePage")
     public String movePage(HttpServletRequest req, HttpServletResponse res, SessionStatus sessionStatus) throws JsonProcessingException {
-        List<Integer> items = commonService.getTestService();
-        Member member = commonService.getMemberTest1();
-        Member member1 = commonService.getMemberTest2();
+//        List<Integer> items = commonService.getTestService();
+//        Member member = commonService.getMemberTest1();
+//        Member member1 = commonService.getMemberTest2();
 
         return "TestPage";
 
@@ -38,7 +38,7 @@ public class CommonController extends RootController {
 
     @RequestMapping("/test/getMember")
     public @ResponseBody Member getMember(){
-        return commonService.getMemberTest1();
+        return null;
     }
 
 }
