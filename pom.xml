@@ -30,6 +30,7 @@
 
         <slf4j.version>1.7.21</slf4j.version>
         <cubrid.jdbc.version>9.3.6.0002</cubrid.jdbc.version>
+        <mssql.jdbc.version>4.0</mssql.jdbc.version>
     </properties>
     <!--인코딩, Import 할 프로젝트의 버전을 설정할 값 끝-->
     <repositories>
@@ -332,6 +333,14 @@
             <version>${cubrid.jdbc.version}</version>
         </dependency>
         <!--큐브리드 jdbc 끝-->
+
+        <!--sql server jdbc 시작-->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>${mssql.jdbc.version}</version>
+        </dependency>
+        <!--sql server jdbc 끝-->
 
         <!--jdbc관련 끝-->
 
