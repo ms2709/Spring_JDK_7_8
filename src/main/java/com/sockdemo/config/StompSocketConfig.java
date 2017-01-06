@@ -34,7 +34,7 @@ public class StompSocketConfig extends AbstractWebSocketMessageBrokerConfigurer 
         registry.setApplicationDestinationPrefixes("/app")
 //                .enableStompBrokerRelay("/topic","/queue")
 //                .setRelayPort(15672);
-                .enableSimpleBroker("/topic", "/queue");
+                .enableSimpleBroker("/topic", "/queue", "/exchange");
     }
 
     private class RandomUsernameHandshakehandler extends DefaultHandshakeHandler {

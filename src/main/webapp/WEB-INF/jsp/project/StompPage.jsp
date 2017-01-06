@@ -17,16 +17,29 @@
         <script type="application/javascript">
             var ws;
             var stomClient;
+            var username;
 
             $(document).ready(function () {
+                
+            });
+
+            function connect() {
                 ws = new WebSocket('ws://localhost:8080/questStomp.ws');
                 //ws = new SockJS('http://localhost:8080/questStomp');
                 stomClient = Stomp.over(ws);
 
-                stomClient.connect({}, function (frame) {
-                    writeToScreen(frame.headers["user-name"]);
+                var connectHeader = {
+                    login:'shoong92',
+                    password:'s7856',
+                    'groupNo':'g#001',
+                    'clientId':'0001'
+                };
 
-                    stomClient.subscribe("/topic/questStomp.ws", function (message) {
+                stomClient.connect(connectHeader, function (frame) {
+                    username = frame.headers["user-name"];
+                    writeToScreen(username);
+
+                    stomClient.subscribe("/topic/questStomp.ws.message", function (message) {
                         console.log("rev(topic) : " + message.body);
                         writeToScreen("rev(topic) : " + message.body);
                     });
@@ -35,11 +48,42 @@
                         console.log("rev(user) : " + message.body);
                         writeToScreen("rev(user) : " + message.body);
                     });
+
+                    stomClient.subscribe("/user/exchange/amq.direct/questStomp.ws.message", function (message) {
+                        console.log("rev(exchange) : " + message.body);
+                        writeToScreen("rev(exchange) : " + message.body);
+                    });
+                    stomClient.subscribe("/user/exchange/amq.direct/questStomp.ws.message1", function (message) {
+                        console.log("rev(exchange1) : " + message.body);
+                        writeToScreen("rev(exchange1) : " + message.body);
+                    });
+                    stomClient.subscribe("/user/exchange/direct/message", function (message) {
+                        console.log("rev(exchange2) : " + message.body);
+                        writeToScreen("rev(exchange2) : " + message.body);
+                    });
+
+                    stomClient.subscribe("/app/questStomp.ws/1", function(message) {
+                        console.log("app : " + message);
+                        writeToScreen("app : " + message);
+                    });
+                }, function (error) {
+                    console.log("error : " + error);
+                    writeToScreen("error : " + error);
                 });
-            });
+            }
+            
+            function disconnect() {
+                stomClient.disconnect(function () {
+                    writeToScreen("Disconnected!!!")
+                });
+            };
 
             function  sendMessage() {
-                stomClient.send("/app/questStomp.ws", {}, "stomp send ok");
+                stomClient.send("/app/questStomp.ws.message", {}, "stomp send ok");
+            }
+
+            function sendMessageTo() {
+                stomClient.send("/app/questStomp.ws.private." + username, {}, "stomp send to other ok!!!");
             }
 
             function writeToScreen(message) {
@@ -58,7 +102,10 @@
 
     <div style="text-align: center;">
         <form action="">
+            <input onclick="connect()" value="connect" type="button">
             <input onclick="sendMessage()" value="Send" type="button">
+            <input onclick="sendMessageTo()" value="SendTo" type="button">
+            <input onclick="disconnect()" value="disconnect" type="button">
             <input id="textID" name="message" value="Hello WebSocket!" type="text"><br>
         </form>
     </div>
