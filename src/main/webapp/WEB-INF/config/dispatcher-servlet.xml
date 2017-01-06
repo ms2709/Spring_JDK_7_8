@@ -69,7 +69,6 @@
         <property name="useDefaultSuffixPattern" value="false"/>
     </bean>
 
-
     <task:scheduler id="scheduler" pool-size="10" />
     <task:annotation-driven scheduler="scheduler" />
 

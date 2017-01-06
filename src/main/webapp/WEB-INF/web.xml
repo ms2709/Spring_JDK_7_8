@@ -39,6 +39,22 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>socket</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/config/websocket-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>socket</servlet-name>
+        <url-pattern>*.ws</url-pattern>
+        <servlet-name>socket</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <!--~~~.do 이런식으로 url request해야함-->
     <!--변경 하고 싶을때에는 do를 다른 이름으로 변경할 수 있음-->
     <servlet-mapping>
@@ -47,7 +63,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>Index.jsp</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
     <login-config>

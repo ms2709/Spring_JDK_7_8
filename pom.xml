@@ -120,6 +120,7 @@
             <artifactId>jackson-annotations</artifactId>
             <version>${jacksonJson.version}</version>
         </dependency>
+
         <!--jackson json 끝-->
 
 
@@ -236,6 +237,22 @@
             </exclusions>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>3.0.3.RELEASE</version>
+        </dependency>
         <!--스프링 프레임워크 관련 끝-->
 
         <!--암호화 관련 라이브러리-->

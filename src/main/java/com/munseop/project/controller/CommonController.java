@@ -31,7 +31,7 @@ public class CommonController extends RootController {
 //        Member member = commonService.getMemberTest1();
 //        Member member1 = commonService.getMemberTest2();
 
-        return "TestPage";
+        return "StompPage";
 
     }
 
