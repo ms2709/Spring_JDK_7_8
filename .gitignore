@@ -1,10 +1,13 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Example user template template
 ### Example user template
+### git ignore 파일
+### 새로 생성된 파일만 ignore된다. 기존에 내려받은 파일에 대해서는 ignore되지 않음
+### IDE 툴에서 ignore해야함
 
 # IntelliJ project files
 .idea
 *.iml
-/src/main/resources/spring/context-jpa.xml
+
 out
 gen
