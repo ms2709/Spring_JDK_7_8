@@ -29,7 +29,7 @@ public class CommonController extends RootController {
     public String movePage(HttpServletRequest req, HttpServletResponse res, SessionStatus sessionStatus) throws JsonProcessingException {
         List<Integer> items = commonService.getTestService();
         Member member = commonService.getMemberTest1();
-        Member member1 = commonService.getMemberTest2();
+//        Member member1 = commonService.getMemberTest2();
 
         return "TestPage";
 
