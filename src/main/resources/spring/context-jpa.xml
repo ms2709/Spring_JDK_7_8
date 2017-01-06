@@ -29,7 +29,7 @@
         <property name="driverClassName" value="cubrid.jdbc.driver.CUBRIDDriver" />
         <property name="url" value="jdbc:cubrid:접속정보:접속포트:DB명:::?charset=UTF-8" />
         <property name="username" value="유저명" />
-        <property name="password" value="비밀번호" />
+        <property name="password" value="비밀번호123aa" />
     </bean>
 
     <!--오라클 데이터 소스-->
