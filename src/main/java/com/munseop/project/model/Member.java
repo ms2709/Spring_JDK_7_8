@@ -14,6 +14,12 @@ public class Member implements Serializable {
     @Column(name = "memberId")
     private Integer memberId;
 
+    private String loginId;
+
+    private String password;
+
+    private String userName;
+
     public Integer getMemberId() {
         return memberId;
     }
@@ -21,4 +27,16 @@ public class Member implements Serializable {
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
+
+    public String getLoginId() { return this.loginId; }
+
+    public void setLoginId(String loginId) { this.loginId = loginId; }
+
+    public String getPassword() { return  this.password; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public String getUserName() { return this.userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
 }

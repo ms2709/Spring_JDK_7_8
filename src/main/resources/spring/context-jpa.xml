@@ -44,9 +44,9 @@
     <!--MSSQL SERVER 데이터 소스-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-    <property name="url" value="jdbc:sqlserver://localhost:1433;databaseName=ExamplesDB" />
-    <property name="username" value="유저명"/>
-    <property name="password" value="비밀번호"/>
+    <property name="url" value="jdbc:sqlserver://dev.safetia.com:1433;databaseName=ChatServiceTest" />
+    <property name="username" value="sa"/>
+    <property name="password" value="zonerock"/>
 
     <!--<property name="defaultAutoCommit" value="false"/>-->
     </bean>

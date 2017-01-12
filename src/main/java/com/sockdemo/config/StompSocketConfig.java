@@ -1,7 +1,9 @@
 package com.sockdemo.config;
 
+import com.munseop.common.model.CurrentMember;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.socket.WebSocketHandler;
@@ -22,28 +24,39 @@ import java.util.Random;
 public class StompSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/questStomp.ws")
-                .setHandshakeHandler(new RandomUsernameHandshakehandler());
+        registry.addEndpoint("/chat.ws")
+                .setHandshakeHandler(new UsernameHandshakehandler());
 
-        registry.addEndpoint("/questStomp")
-                .setHandshakeHandler(new RandomUsernameHandshakehandler()).withSockJS();
+        registry.addEndpoint("/chat")
+                .setHandshakeHandler(new UsernameHandshakehandler()).withSockJS();
     }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry){
         registry.setApplicationDestinationPrefixes("/app")
 //                .enableStompBrokerRelay("/topic","/queue")
-//                .setRelayPort(15672);
                 .enableSimpleBroker("/topic", "/queue", "/exchange");
     }
 
-    private class RandomUsernameHandshakehandler extends DefaultHandshakeHandler {
-        private String[] ADJECTIVES = {"aggressive", "annoyed", "black", "bootiful", "crazy", "elegant"};
-        private String[] NOUNS = {"agent", "american", "anaconda", "caiman", "crab", "flamingo", "gorilla"};
+    private class UsernameHandshakehandler extends DefaultHandshakeHandler {
+
+        private String[] ADJECTIVES = {"a", "b", "c", "d", "e", "f", "g", "i", "j", "k", "l", "m", "n"};
+        private String[] NOUNS = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
 
         @Override
         protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes){
-            String username = this.getRandom(ADJECTIVES) + "-" + this.getRandom(NOUNS) + getRandomInt(NOUNS.length);
+            CurrentMember currentmember = (CurrentMember)((ServletServerHttpRequest) request)
+                    .getServletRequest()
+                    .getSession()
+                    .getAttribute("currentMember");
+
+            String username = "";
+            if(currentmember != null){
+                username = currentmember.getLoginId();
+            }
+            else{
+                username = this.getRandom(ADJECTIVES) + "-" + this.getRandom(NOUNS) + getRandomInt(NOUNS.length);
+            }
 
             return new UsernamePasswordAuthenticationToken(username, null);
         }

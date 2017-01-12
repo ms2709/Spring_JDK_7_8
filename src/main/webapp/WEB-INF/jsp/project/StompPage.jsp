@@ -24,7 +24,7 @@
             });
 
             function connect() {
-                ws = new WebSocket('ws://localhost:8080/questStomp.ws');
+                ws = new WebSocket('ws://localhost:8080/chat.ws');
                 //ws = new SockJS('http://localhost:8080/questStomp');
                 stomClient = Stomp.over(ws);
 
@@ -39,30 +39,24 @@
                     username = frame.headers["user-name"];
                     writeToScreen(username);
 
-                    stomClient.subscribe("/topic/questStomp.ws.message", function (message) {
+                    stomClient.subscribe("/topic/chat.ws.message.ex", function (message) {
                         console.log("rev(topic) : " + message.body);
                         writeToScreen("rev(topic) : " + message.body);
                     });
 
-                    stomClient.subscribe("/user/queue/private", function (message) {
-                        console.log("rev(user) : " + message.body);
-                        writeToScreen("rev(user) : " + message.body);
-                    });
+//                    stomClient.subscribe("/user/queue/private", function (message) {
+//                        console.log("rev(user) : " + message.body);
+//                        writeToScreen("rev(user) : " + message.body);
+//                    });
 
-                    stomClient.subscribe("/user/exchange/amq.direct/questStomp.ws.message", function (message) {
+                    stomClient.subscribe("/user/exchange/amq.direct/chat.ws.message.ex.afc469a7-aa12-ad24-dea2-7b1c939f3afe", function (message) {
                         console.log("rev(exchange) : " + message.body);
                         writeToScreen("rev(exchange) : " + message.body);
-                    });
-                    stomClient.subscribe("/user/exchange/amq.direct/questStomp.ws.message1", function (message) {
-                        console.log("rev(exchange1) : " + message.body);
-                        writeToScreen("rev(exchange1) : " + message.body);
-                    });
-                    stomClient.subscribe("/user/exchange/direct/message", function (message) {
-                        console.log("rev(exchange2) : " + message.body);
-                        writeToScreen("rev(exchange2) : " + message.body);
+
+                        stomClient.subscribe("/app/chat.ws.ex/1");
                     });
 
-                    stomClient.subscribe("/app/questStomp.ws/1", function(message) {
+                    stomClient.subscribe("/app/chat.ws.ex/1", function(message) {
                         console.log("app : " + message);
                         writeToScreen("app : " + message);
                     });
@@ -79,11 +73,11 @@
             };
 
             function  sendMessage() {
-                stomClient.send("/app/questStomp.ws.message", {}, "stomp send ok");
+                stomClient.send("/app/chat.ws.message.ex", {}, "stomp send ok");
             }
 
             function sendMessageTo() {
-                stomClient.send("/app/questStomp.ws.private." + username, {}, "stomp send to other ok!!!");
+                stomClient.send("/app/chat.ws.private.ex." + username, {}, "stomp send to other ok!!!");
             }
 
             function writeToScreen(message) {

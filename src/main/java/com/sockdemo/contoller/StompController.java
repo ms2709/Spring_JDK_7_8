@@ -26,7 +26,7 @@ public class StompController {
     #1. SockJS로 요청시 호출되는 MessageMapping Method
     #2. SockJS로 요청시 aaa.aa로 요청이 안됨
      */
-    @MessageMapping("/questStomp")
+    @MessageMapping("/chat")
     public String procStompSockJsMessage(String msg, Principal principal){
         return msg.toUpperCase() + " by " + principal.getName();
     }
@@ -34,23 +34,21 @@ public class StompController {
     /*
     #1. WebSocket으로 요청시 호출되는 MessageMapping Method
      */
-    @MessageMapping("/questStomp.ws.message")
+    @MessageMapping("/chat.ws.message.ex")
     public String procStompWebSocketMessage(@Payload String msg, @Headers Map map, @Header String simpDestination, Message<?> msgEx, MessageHeaders msgHeaders, Principal principal){
         return msg.toUpperCase() + " by " + principal.getName();
     }
 
-    @MessageMapping("/questStomp.ws.private.{username}")
+    @MessageMapping("/chat.ws.private.ex.{username}")
     public void procStompWebSocketMessageTo(@Payload String msg, @DestinationVariable("username") String username, Principal principal){
-        simpMessagingTemplate.convertAndSend("/user/" + username + "/exchange/amq.direct/questStomp.ws.message", msg);
-        simpMessagingTemplate.convertAndSend("/user/" + username + "/exchange/amq.direct/questStomp.ws.message1", msg);
-        simpMessagingTemplate.convertAndSend("/user/" + username + "/exchange/direct/message", msg);
+        simpMessagingTemplate.convertAndSend("/user/" + username + "/exchange/amq.direct/chat.ws.message.ex.afc469a7-aa12-ad24-dea2-7b1c939f3afe", msg);
     }
     /*
     #1. Client가 Controller Methood에 대한 요청을 처리하고 보내주기 위한 방법
     #2. 보통은 Client가 @MessageMapping을 통해 요청 후 return 시 기본적으로 '/topic' 브로커를 사용하여 broadcasting을 함.
     #3. 이 메소드는 클라이언트 요청 후 Spring MVC처럼 작동하는 방식임.
      */
-    @SubscribeMapping("/questStomp.ws/{submissionId}")
+    @SubscribeMapping("/chat.ws.ex/{submissionId}")
     public MessageEx getSubcribeInfo(@DestinationVariable long submissionId){
         return new MessageEx("Key", "Value # " + submissionId);
     }

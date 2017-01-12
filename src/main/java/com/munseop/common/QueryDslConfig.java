@@ -32,7 +32,4 @@ public class QueryDslConfig {
         EclipseLinkTemplates template = new EclipseLinkTemplates();
         return new JPAQueryFactory(template,em);
     }
-
-
-
 }
