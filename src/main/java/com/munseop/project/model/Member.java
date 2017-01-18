@@ -18,7 +18,7 @@ public class Member implements Serializable {
 
     private String password;
 
-    private String userName;
+    private String memberName;
 
     public Integer getMemberId() {
         return memberId;
@@ -36,7 +36,7 @@ public class Member implements Serializable {
 
     public void setPassword(String password) { this.password = password; }
 
-    public String getUserName() { return this.userName; }
+    public String getMemberName() { return this.memberName; }
 
-    public void setUserName(String userName) { this.userName = userName; }
+    public void setMemberName(String userName) { this.memberName = userName; }
 }

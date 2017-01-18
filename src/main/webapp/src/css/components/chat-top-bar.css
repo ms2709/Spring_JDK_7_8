@@ -1,0 +1,14 @@
+.chat-top-bar {
+  background: #666;
+  color: #fff;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  height: 70px;
+  max-height: 70px;
+  border-radius: 0;
+}
+
+.chat-top-bar .icon-minim {
+  padding: 2px 10px;
+}

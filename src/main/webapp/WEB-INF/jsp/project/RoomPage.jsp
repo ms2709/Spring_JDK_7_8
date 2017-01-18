@@ -12,117 +12,78 @@
         </title>
         <jsp:include page="Common/Script.jsp" />
 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/res/src/css/style.css">
+        <link rel="stylesheet" href="/res/src/css/themes.css">
+
+        <script src="/res/src/scripts/chatd.js"></script>
     </head>
     <body>
-    <jsp:include page="Common/Top.jsp" />
-
-    <div ng-app="chatModule" ng-controller="ctrlChat">
-        <div>
-            <button ng-click="initSock()">connect</button>
-            <button ng-click="sendMessageToRoom()">sendToRoom</button>
-            <button ng-click="sendMessageToUser()">sendToRoom</button>
-            <button ng-click="disconnect()">disconnect</button>
-        </div>
+    <%--<jsp:include page="Common/Top.jsp" />--%>
+    <div class="chat-container" ng-app="app"  ng-controller="ctrl as vm" class="ng-scope">
+        <chat-directive theme="chat-th-material"
+                        submit-button-text="Send Message"
+                        input-placeholder-text="You can write here ..."
+                        send-message="vm.sendMessage"
+                        messages="vm.messages"
+                        user-name="vm.userName"
+                        visible="true"
+                        title="vm.title"></chat-directive>
     </div>
-    <jsp:include page="Common/Bottom.jsp" />
+    <%--<jsp:include page="Common/Bottom.jsp" />--%>
     </body>
 
 </html>
 
 <script type="text/javascript">
-    angular.module('chatModule', ['angularUUID2', 'chatModule.services']).controller('ctrlChat', function ($rootScope, $scope, $http, uuid2, chat) {
+    angular.module('app', ['chat.module', 'chat.services']).controller('ctrl', ctrl);
+
+    function ctrl($http, chatService){
+        var vm = this;
+        vm.title = "화재발생";
+        vm.messages = [];
+
         var room = decodeURIComponent(document.cookie);
-        $scope.room = angular.fromJson(room.replace('room=', ''));
+        vm.room = angular.fromJson(room.replace('room=', ''));
 
-        $scope.initSock = function() {
-            chat.init('ws://localhost:8080/chat.ws');
-            chat.connect({}, function (frame) {
-                $scope.username = frame.headers['user-name'];
+        vm.initSock = function () {
+            chatService.init('ws://192.168.0.6:8080/chat.ws');
+            chatService.connect({}, function (frame) {
+                vm.userName = frame.headers['user-name'];
 
-                chat.subscribe("/topic/chat.ws.message." + $scope.room.roomId.toUpperCase(), function (message) {
-                   console.log(message);
+                chatService.subscribe("/topic/chat.ws.message." + vm.room.roomId.toUpperCase(), function (message) {
+                    var msg = angular.fromJson(message.body);
+                    if(vm.userName !== msg.sendUserId) {
+                        vm.messages.push(msg);
+                    }
                 });
 
-                chat.subscribe("/user/exchange/amq.direct/chat.ws.message." + $scope.room.roomId.toUpperCase(), function (message) {
-                    console.log(message);
+                chatService.subscribe("/user/exchange/amq.direct/chat.ws.message." + vm.room.roomId.toUpperCase(), function (message) {
+                    vm.messages.push(message);
                 });
+
             }, function (error) {
                 console.log(error);
             });
-        }
+        };
 
-        $scope.disconnect = function () {
-            chat.disconnect(function () { console.log("disconnected!!");});
-        }
+        vm.initSock();
 
-        $scope.sendMessageToRoom = function () {
-            $scope.msg = {
-                roomId:$scope.room.roomId.toUpperCase(),
-                message:'TEST message 입니다!',
-                sendUserId:$scope.username,
+        this.sendMessage = function (message, userName) {
+            vm.msg = {
+                roomId:vm.room.roomId.toUpperCase(),
+                message: message,
+                sendUserId:userName,
                 recvuserId:'',
-                room:$scope.room,
+                room:vm.room,
                 status:'send'
             };
-            console.log($scope.msg);
 
-            chat.send("/app/chat.ws.message." + $scope.room.roomId.toUpperCase(), {}, angular.toJson($scope.msg));
-        }
+            chatService.send("/app/chat.ws.message." + vm.room.roomId.toUpperCase(), {}, angular.toJson(vm.msg));
 
-        $scope.sendMessageToUser = function () {
-            $scope.msg = {
-                roomId:$scope.room.roomId.toUpperCase(),
-                message:'TEST message 입니다!',
-                sendUserId:$scope.username,
-                recvuserId:'guest1',
-                room:$scope.room,
-                status:'send'
-            };
-            console.log($scope.msg);
-
-            chat.send("/app/chat.ws.private." + $scope.msg.recvuserId, {}, angular.toJson($scope.msg));
-        }
-    });
-
-    angular.module('chatModule.services', [])
-        .factory('chat', ['$rootScope', function($rootScope) {
-            var stompClient;
-
-            var socket = {
-
-                init: function(url) {
-                    stompClient = Stomp.over(new WebSocket(url));
-                },
-                connect: function(header, successCallback, errorCallback) {
-
-                    stompClient.connect(header, function(frame) {
-                        $rootScope.$apply(function() {
-                            successCallback(frame);
-                        });
-                    }, function(error) {
-                        $rootScope.$apply(function(){
-                            errorCallback(error);
-                        });
-                    });
-                },
-                disconnect: function (disconnected) {
-                    stompClient.disconnect(function () {
-                        disconnected();
-                    });
-                },
-                subscribe : function(destination, callback) {
-                    stompClient.subscribe(destination, function(message) {
-                        $rootScope.$apply(function(){
-                            callback(message);
-                        });
-                    });
-                },
-                send: function(destination, headers, object) {
-                    stompClient.send(destination, headers, object);
-                }
+            if(message && message.message !== '' && userName){
+                vm.messages.push(vm.msg);
             }
-
-            return socket;
-
-        }]);
+        }
+    }
 </script>

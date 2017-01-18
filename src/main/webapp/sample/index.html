@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>
+    AngularJS+Bootstrap Simple Chat Directive Sample
+  </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link
+    rel="stylesheet"
+    href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link
+    rel="stylesheet"
+    href="../src/css/style.css">
+
+    <link
+    rel="stylesheet"
+    href="../src/css/themes.css">
+
+  <link
+    rel="stylesheet"
+    href="style.css">
+</head>
+<body ng-controller="Shell as vm">
+
+  <div class="chat-container">
+    <irontec-simple-chat
+        messages="vm.messages"
+        username="vm.username"
+        input-placeholder-text="You can write here"
+        submit-button-text="Send your message"
+        title="Super Awesome Chat"
+        theme="material"
+        submit-function="vm.sendMessage"
+        visible="true">
+    </irontec-simple-chat>
+  </div>
+
+
+  <script src="../bower_components/lodash/dist/lodash.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+
+  <script src="../src/scripts/index.js"></script>
+  <!--<script src="../src/scripts/templates.js"></script>-->
+
+  <!--<script src="app.js"></script>-->
+  <script type="text/javascript">
+      angular.module('app', ['irontec.simpleChat']);
+
+      angular.module('app').controller('Shell', Shell);
+
+      function Shell() {
+
+          var vm = this;
+
+          vm.messages = [
+              {
+                  'username': 'Matt',
+                  'content': 'Hi!'
+              },
+              {
+                  'username': 'Elisa',
+                  'content': 'Whats up?'
+              },
+              {
+                  'username': 'Matt',
+                  'content': 'I found this nice AngularJS Directive'
+              },
+              {
+                  'username': 'Elisa',
+                  'content': 'Looks Great!'
+              }
+          ];
+
+          vm.username = 'Matt';
+
+          vm.sendMessage = function (message, username) {
+              if (message && message !== '' && username) {
+                  vm.messages.push({
+                      'username': username,
+                      'content': message
+                  });
+              }
+          };
+      }
+  </script>
+
+</body>
+</html>

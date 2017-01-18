@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%--공용으로 사용될 스크립트등--%>
-<script type="text/javascript" src="/res/scripts/jquery-1.11.3.min.js" ></script>
-<script type="text/javascript" src="/res/scripts/angular.min.js" ></script>
-<script type="text/javascript" src="/res/scripts/angular-uuid2.js"></script>
+<script src="/res/scripts/jquery-1.11.3.min.js" ></script>
+<script src="/res/scripts/angular.min.js" ></script>
+<script src="/res/scripts/angular-uuid2.js"></script>
+<script src="/res/bower_components/lodash/dist/lodash.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script src="http://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 
