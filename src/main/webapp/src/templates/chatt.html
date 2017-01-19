@@ -26,11 +26,11 @@
                 </div>
             </div>
             <div class="panel-footer chat-bottom-bar">
-                <form style="display:inherit">
+                <form style="display:inherit" ng-submit="vm.sendMessageFunction()">
                     <div class="input-group" >
                         <input type="text" class="form-control input-sm chat-input" placeholder="{{vm.inputPlaceholderText}}" ng-model="vm.messageTx" />
                         <span class="input-group-btn">
-                                <input type="button" class="btn btn-sm chat-submit-button" ng-click="vm.sendMessageFunction()" value="{{vm.submitButtonText}}"></input>
+                            <input type="submit" class="btn btn-sm chat-submit-button" value="{{vm.submitButtonText}}"></input>
                         </span>
                     </div>
                 </form>

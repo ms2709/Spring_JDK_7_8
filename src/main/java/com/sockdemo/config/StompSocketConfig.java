@@ -34,8 +34,10 @@ public class StompSocketConfig extends AbstractWebSocketMessageBrokerConfigurer 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry){
         registry.setApplicationDestinationPrefixes("/app")
-//                .enableStompBrokerRelay("/topic","/queue")
-                .enableSimpleBroker("/topic", "/queue", "/exchange");
+                .enableStompBrokerRelay("/topic","/queue", "/exchange") //broker relay (message broker 서비스 사용시 : ex. rabbitmq)
+                .setSystemHeartbeatSendInterval(100)
+                .setSystemHeartbeatReceiveInterval(100);
+//              .enableSimpleBroker("/topic", "/queue", "/exchange"); // simple broker 사용시 (메모리상에서 사용하는 broker)
     }
 
     private class UsernameHandshakehandler extends DefaultHandshakeHandler {
