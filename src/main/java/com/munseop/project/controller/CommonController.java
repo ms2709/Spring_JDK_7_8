@@ -31,9 +31,6 @@ public class CommonController extends RootController {
 
     @RequestMapping("/movePage")
     public String movePage(ModelMap model, HttpServletRequest req, HttpServletResponse res, SessionStatus sessionStatus) throws JsonProcessingException, Exception {
-//        List<Integer> items = commonService.getTestService();
-//        Member member = commonService.getMemberTest1();
-//        Member member1 = commonService.getMemberTest2();
 
         CurrentMember currentMember = CommonController.IsLoginUser(req);
 

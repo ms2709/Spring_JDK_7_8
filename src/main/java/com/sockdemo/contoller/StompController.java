@@ -1,5 +1,7 @@
 package com.sockdemo.contoller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
@@ -19,6 +21,7 @@ import java.util.Map;
 @Controller
 public class StompController {
 
+    private final Logger logger = LoggerFactory.getLogger( ChatController.class );
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
@@ -36,7 +39,14 @@ public class StompController {
      */
     @MessageMapping("/chat.ws.message.ex")
     public String procStompWebSocketMessage(@Payload String msg, @Headers Map map, @Header String simpDestination, Message<?> msgEx, MessageHeaders msgHeaders, Principal principal){
+        logger.info(msg);
         return msg.toUpperCase() + " by " + principal.getName();
+    }
+
+    @MessageMapping("/chat.ws.upload")
+    public  void procStompWebSocketUpload(@Payload String msg, @Headers Map map, @Header String simpDestination, Message<?> msgEx, MessageHeaders msgHeaders, Principal principal){
+
+        simpMessagingTemplate.convertAndSend( "/topic/chat.ws.message.ex","ok");
     }
 
     @MessageMapping("/chat.ws.private.ex.{username}")

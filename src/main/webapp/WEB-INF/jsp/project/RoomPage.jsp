@@ -53,16 +53,17 @@
             chatService.connect({}, function (frame) {
                 vm.userName = frame.headers['user-name'];
 
-                chatService.subscribe("/topic/chat.ws.message." + vm.room.roomId.toUpperCase(), function (message) {
+                chatService.subscriber("/topic/chat.ws.message." + vm.room.roomId.toUpperCase(), function (message) {
+                    message.ack();
                     var msg = angular.fromJson(message.body);
                     if(vm.userName !== msg.sendUserId) {
                         vm.messages.push(msg);
                     }
-                });
-
-                chatService.subscribe("/user/exchange/amq.direct/chat.ws.message." + vm.room.roomId.toUpperCase(), function (message) {
-                    vm.messages.push(message);
-                });
+                }, {ack:"client"});
+//
+//                chatService.subscribe("/user/exchange/amq.direct/chat.ws.message." + vm.room.roomId.toUpperCase(), function (message) {
+//                    vm.messages.push(message);
+//                });
 
             }, function (error) {
                 console.log(error);
@@ -81,7 +82,7 @@
                 status:'send'
             };
 
-            chatService.send("/app/chat.ws.message." + vm.room.roomId.toUpperCase(), {}, angular.toJson(vm.msg));
+            chatService.sender("/app/chat.ws.message." + vm.room.roomId.toUpperCase(), {}, angular.toJson(vm.msg));
 
             if(message && message.message !== '' && userName){
                 vm.messages.push(vm.msg);

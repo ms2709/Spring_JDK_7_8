@@ -5,11 +5,20 @@ import com.munseop.project.model.Room;
 import com.munseop.project.model.RoomDetail;
 import com.munseop.project.service.ChatMessageService;
 import com.munseop.project.service.RoomService;
+import com.rabbitmq.client.ConnectionFactory;
 import com.sockdemo.config.WebSocketConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.core.MessagePostProcessor;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -32,6 +41,10 @@ public class ChatController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+    @Autowired
+    private RabbitMessagingTemplate rabbitMessagingTemplate;
+
+
     @MessageMapping("/chat.ws.message.{roomId}")
     public void messageToUsersInRoom(@DestinationVariable("roomId")String roomId,
                                      @Headers Map map,
@@ -40,7 +53,9 @@ public class ChatController {
                                      Principal principal){
 
         chatMessageService.saveMessage(msg);
+
         simpMessagingTemplate.convertAndSend("/topic/chat.ws.message." + roomId, msg);
+        //rabbitMessagingTemplate.convertAndSend("amq.topic", "/topic/chat.ws.message." + roomId, msg);
     }
 
     @MessageMapping("/chat.ws.private.{recvuser}")

@@ -255,6 +255,18 @@
         </dependency>
         <!--스프링 프레임워크 관련 끝-->
         <!-- relay broker -->
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-amqp</artifactId>
+            <version>1.7.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>1.6.6.RELEASE</version>
+        </dependency>
+
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>

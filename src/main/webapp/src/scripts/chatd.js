@@ -123,14 +123,14 @@
                     disconnected();
                 });
             },
-            subscribe : function(destination, callback) {
+            subscriber : function(destination, callback, ack) {
                 stompClient.subscribe(destination, function(message) {
                     $rootScope.$apply(function(){
                         callback(message);
                     });
-                });
+                }, ack);
             },
-            send: function(destination, headers, object) {
+            sender: function(destination, headers, object) {
                 stompClient.send(destination, headers, object);
             }
         }
